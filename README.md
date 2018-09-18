@@ -2,11 +2,9 @@
 
 ## Csv To Sql
 
-## Análise de Código
-[![CodeFactor](https://www.codefactor.io/repository/github/cpsilva/chamadofacil/badge)](https://www.codefactor.io/repository/github/cpsilva/chamadofacil)
+## Code Analysis
+[![CodeFactor](https://www.codefactor.io/repository/github/cpsilva/etlproject/badge)](https://www.codefactor.io/repository/github/cpsilva/etlproject)
 
-## Tecnologias Utilizadas:
+## Continuous Integration
+[![Build status](https://ci.appveyor.com/api/projects/status/il29gb9dr0k636m2?svg=true)](https://ci.appveyor.com/project/cpsilva/etlproject)
 
-* Visual Studio 2017
-* .NET Core 2.0
-* C#
