@@ -34,17 +34,14 @@ namespace CsvToSql.ETL
 
 		private static void TratarInformacoesCsv()
 		{
-
 		}
 
 		private static void GravarInformacaoBancoDados()
 		{
-
 		}
 
 		private static void SalvarCopiaCsvComResultadoS3()
 		{
-
 		}
 	}
 }
