@@ -2,23 +2,23 @@
 using CsvToSql.ETL.CsvService;
 using CsvToSql.ETL.FtpService;
 using CsvToSql.ETL.SqlService;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace CsvToSql.ETL.EtlService
 {
 	public class EtlService : IEtlService
 	{
-		//Necessario configurar o container
-		private IAmazonService _amazonService { get; } = new AmazonService.AmazonService();
-		private ICsvService _csvService { get; } = new CsvService.CsvService();
-		private IFtpService _ftpService { get; } = new FtpService.FtpService();
-		private ISqlService _sqlService { get; } = new SqlService.SqlService();
+		private IAmazonService _amazonService;
+		private ICsvService _csvService;
+		private IFtpService _ftpService;
+		private ISqlService _sqlService;
 
-		public EtlService()
+		public EtlService(IAmazonService amazonService, ICsvService csvService, IFtpService ftpService, ISqlService sqlService)
 		{
-
+			_amazonService = amazonService;
+			_csvService = csvService;
+			_ftpService = ftpService;
+			_sqlService = sqlService;
 		}
 
 		public void Executar()

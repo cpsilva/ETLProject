@@ -4,15 +4,13 @@ namespace CsvToSql.ETL
 {
 	public class Program
 	{
-		private static IEtlService _etlService;
-
-		public Program(IEtlService etlService)
-		{
-			_etlService = etlService;
-		}
 
 		static void Main(string[] args)
 		{
+			Container.RegisterServices();
+
+			var _etlService = Container.GetService<IEtlService>();
+
 			_etlService.Executar();
 		}
 	}
