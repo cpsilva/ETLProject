@@ -3,3 +3,5 @@
 ################################################################################
 
 /CsvToSql.ETL/.vs/CsvToSql.ETL/v15
+/CsvToSql.ETL/CsvToSql.ETL/obj
+/CsvToSql.ETL/.vs/config
