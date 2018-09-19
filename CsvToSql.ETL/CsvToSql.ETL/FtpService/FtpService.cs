@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Net;
-using System.Text;
 
 namespace CsvToSql.ETL.FtpService
 {
@@ -10,19 +9,17 @@ namespace CsvToSql.ETL.FtpService
 	{
 		public Stream BaixarCsvViaFTP()
 		{
-			// Extrair para config
-			FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://www.contoso.com/test.htm");
+			FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["ftpserver"].ToString());
 			request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-			// Credenciais para logar.
-			// Extrair para config
-			request.Credentials = new NetworkCredential("anonymous", "user");
+			request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["username"].ToString(), ConfigurationManager.AppSettings["password"].ToString());
 
 			FtpWebResponse response = (FtpWebResponse)request.GetResponse();
 
 			Stream responseStream = response.GetResponseStream();
 			StreamReader reader = new StreamReader(responseStream);
 			Console.WriteLine(reader.ReadToEnd());
+			Console.ReadKey();
 
 			reader.Close();
 			response.Close();

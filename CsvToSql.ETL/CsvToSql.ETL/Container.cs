@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CsvToSql.ETL.AmazonService;
+﻿using CsvToSql.ETL.AmazonService;
 using CsvToSql.ETL.CsvService;
 using CsvToSql.ETL.EtlService;
 using CsvToSql.ETL.FtpService;
 using CsvToSql.ETL.SqlService;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CsvToSql.ETL
 {
