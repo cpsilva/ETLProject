@@ -1,5 +1,4 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Net;
 
@@ -7,24 +6,20 @@ namespace CsvToSql.ETL.FtpService
 {
 	public class FtpService : IFtpService
 	{
-		public Stream BaixarCsvViaFTP()
+		public TextReader BaixarCsvViaFTP()
 		{
-			FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["ftpserver"].ToString());
+			var request = (FtpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["ftpserver"].ToString());
 			request.Method = WebRequestMethods.Ftp.DownloadFile;
 
-			request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["username"].ToString(), ConfigurationManager.AppSettings["password"].ToString());
+			request.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["ftpusername"].ToString(), ConfigurationManager.AppSettings["ftppassword"].ToString());
 
-			FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+			var response = (FtpWebResponse)request.GetResponse();
 
-			Stream responseStream = response.GetResponseStream();
-			StreamReader reader = new StreamReader(responseStream);
-			Console.WriteLine(reader.ReadToEnd());
-			Console.ReadKey();
+			var responseStream = response.GetResponseStream();
 
-			reader.Close();
-			response.Close();
+			TextReader csvText = new StreamReader(responseStream);
 
-			return responseStream;
+			return csvText;
 		}
 	}
 }

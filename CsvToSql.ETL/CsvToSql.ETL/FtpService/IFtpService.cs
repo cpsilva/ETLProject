@@ -7,6 +7,6 @@ namespace CsvToSql.ETL.FtpService
 {
 	public interface IFtpService
 	{
-		Stream BaixarCsvViaFTP();
+		TextReader BaixarCsvViaFTP();
 	}
 }

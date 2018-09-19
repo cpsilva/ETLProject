@@ -25,8 +25,8 @@ namespace CsvToSql.ETL.EtlService
 		{
 			var arquivo = _ftpService.BaixarCsvViaFTP();
 			_csvService.TratarInformacoesCsv(arquivo);
-			_sqlService.GravarInformacaoBancoDados(arquivo);
-			_amazonService.SalvarCopiaCsvComResultadoS3(arquivo);
+			//_sqlService.GravarInformacaoBancoDados(arquivo);
+			//_amazonService.SalvarCopiaCsvComResultadoS3(arquivo);
 		}
 	}
 }

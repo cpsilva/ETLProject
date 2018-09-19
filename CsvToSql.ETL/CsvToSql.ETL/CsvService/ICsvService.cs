@@ -7,6 +7,6 @@ namespace CsvToSql.ETL.CsvService
 {
 	public interface ICsvService
 	{
-		Stream TratarInformacoesCsv(Stream csv);
+		void TratarInformacoesCsv(TextReader csv);
 	}
 }
