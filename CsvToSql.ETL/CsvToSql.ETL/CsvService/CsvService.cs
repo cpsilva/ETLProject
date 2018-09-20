@@ -11,32 +11,28 @@ namespace CsvToSql.ETL.CsvService
 	{
 		public void TratarInformacoesCsv(TextReader csv)
 		{
-			var listaCsvBruta = CsvParaListaDeCsvRow(csv);
+			var listaCsvBruta = ConverteCsvParaListaDeCsvModel(csv);
 
 			var listaCsvNomeTratado = TratarNomeDaCampanha(listaCsvBruta);
 
 			var listaCampanhasAgrupadas = AgruparCampanhasEContarQuantidadeCliques(listaCsvNomeTratado);
 		}
 
-		private object AgruparCampanhasEContarQuantidadeCliques(List<CsvRow> listaCsvNomeTratado)
+		private List<CampanhaModel> AgruparCampanhasEContarQuantidadeCliques(List<CsvModel> listaCsvNomeTratado)
 		{
-			IEnumerable<CsvRow> teste;
-
-			teste = listaCsvNomeTratado;
-
-			var one = teste.GroupBy(g => g.NomeCampanha)
-				.Select(gpr => gpr.Key)
+			return listaCsvNomeTratado.GroupBy(g => g.NomeCampanha)
+				.Select(x => new CampanhaModel
+				{
+					NomeCampanha = x.Key,
+					TotalCliques = x.Select(y => y.NomeCampanha.Equals(x.Key)).Count()
+				})
+				.OrderBy(y => y.NomeCampanha)
 				.ToList();
-
-			Console.WriteLine(one);
-			Console.ReadKey();
-
-			throw new NotImplementedException();
 		}
 
-		private List<CsvRow> CsvParaListaDeCsvRow(TextReader csv)
+		private List<CsvModel> ConverteCsvParaListaDeCsvModel(TextReader csv)
 		{
-			var csvRowList = new List<CsvRow>();
+			var csvRowList = new List<CsvModel>();
 
 			var parser = new CsvParser(csv);
 
@@ -50,7 +46,7 @@ namespace CsvToSql.ETL.CsvService
 
 				var splitRow = row[0].Split(';');
 
-				var linha = new CsvRow()
+				var linha = new CsvModel()
 				{
 					NomeCampanha = splitRow[0],
 					Ping = splitRow[1]
@@ -62,17 +58,27 @@ namespace CsvToSql.ETL.CsvService
 			return csvRowList;
 		}
 
-		private List<CsvRow> TratarNomeDaCampanha(List<CsvRow> csvRowList)
+		private List<CsvModel> TratarNomeDaCampanha(List<CsvModel> csvRowList)
 		{
-			var listaCsvNomeTratado = new List<CsvRow>();
+			var listaCsvNomeTratado = new List<CsvModel>();
 
 			foreach (var item in csvRowList)
 			{
-				var csv = new CsvRow();
+				var csv = new CsvModel();
 
 				if (!item.NomeCampanha.Contains("CAMPAIGN"))
 				{
-					csv.NomeCampanha = item.NomeCampanha.Split('_')[1];
+					item.NomeCampanha = item.NomeCampanha.Split('_')[1];
+
+					if (item.NomeCampanha.Contains("Retry"))
+					{
+						csv.NomeCampanha = item.NomeCampanha.Remove(item.NomeCampanha.Length - 6);
+					}
+					else
+					{
+						csv.NomeCampanha = item.NomeCampanha;
+					}
+
 					csv.Ping = item.Ping;
 
 					listaCsvNomeTratado.Add(csv);

@@ -4,7 +4,6 @@ namespace CsvToSql.ETL
 {
 	public class Program
 	{
-
 		static void Main(string[] args)
 		{
 			Container.RegisterServices();
