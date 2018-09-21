@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CsvToSql.ETL.Models
+﻿namespace CsvToSql.ETL.Models
 {
-	public class CampanhaModel
+	public class CampanhaModel : BaseModel
 	{
 		public int id { get; set; }
 		public string nomeCampanha { get; set; }

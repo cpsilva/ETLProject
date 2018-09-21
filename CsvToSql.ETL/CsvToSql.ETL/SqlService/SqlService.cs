@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using CsvToSql.ETL.Context;
 using CsvToSql.ETL.Models;
+using System.Collections.Generic;
 
 namespace CsvToSql.ETL.SqlService
 {
 	public class SqlService : ISqlService
 	{
+		private IUnitOfWork _unit;
+
+		public SqlService(IUnitOfWork unit)
+		{
+			_unit = unit;
+		}
+
 		public void GravarInformacaoBancoDados(List<CampanhaModel> listaCampanhaModel)
 		{
-			throw new NotImplementedException();
+			_unit.CommandStack.Campanha.AdicionarRange(listaCampanhaModel);
+			_unit.CommandStack.SaveChanges();
 		}
 	}
 }

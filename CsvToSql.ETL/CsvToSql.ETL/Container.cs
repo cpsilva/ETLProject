@@ -1,4 +1,5 @@
 ﻿using CsvToSql.ETL.AmazonService;
+using CsvToSql.ETL.Context;
 using CsvToSql.ETL.CsvService;
 using CsvToSql.ETL.EtlService;
 using CsvToSql.ETL.FtpService;
@@ -38,6 +39,10 @@ namespace CsvToSql.ETL
 			_services.AddScoped<ICsvService, CsvService.CsvService>();
 			_services.AddScoped<IFtpService, FtpService.FtpService>();
 			_services.AddScoped<ISqlService, SqlService.SqlService>();
+
+			_services.AddScoped<IUnitOfWork, UnitOfWork>();
+			_services.AddScoped<ICommandStack, CommandStack>();
+
 			_services.BuildServiceProvider();
 
 			return services;
