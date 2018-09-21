@@ -15,7 +15,7 @@ namespace CsvToSql.ETL.SqlService
 
 		public void GravarListaDeCampanhasAgrupadasEOrdenadas(List<CampanhaModel> listaCampanhaModel)
 		{
-			_unit.CommandStack.Campanha.AdicionarRange(listaCampanhaModel);
+			_unit.CommandStack.caiopires.AdicionarRange(listaCampanhaModel);
 			_unit.CommandStack.SaveChanges();
 		}
 	}

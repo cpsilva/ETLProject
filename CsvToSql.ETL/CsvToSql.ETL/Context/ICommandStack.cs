@@ -4,7 +4,7 @@ namespace CsvToSql.ETL.Context
 {
 	public interface ICommandStack
 	{
-		ICommandRepository<CampanhaModel> Campanha { get; }
+		ICommandRepository<CampanhaModel> caiopires { get; }
 
 		void SaveChanges();
 	}

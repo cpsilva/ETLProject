@@ -1,5 +1,4 @@
 ﻿using CsvToSql.ETL.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace CsvToSql.ETL.Context

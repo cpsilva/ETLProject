@@ -25,7 +25,7 @@ namespace CsvToSql.ETL.EtlService
 			var arquivo = _ftpService.BaixarCsvViaFTP();
 			var listaTratadaEOrdenada = _csvService.TratarInformacoesCsv(arquivo);
 			_sqlService.GravarListaDeCampanhasAgrupadasEOrdenadas(listaTratadaEOrdenada);
-			_amazonService.SalvarCopiaCsvComResultadoS3(listaTratadaEOrdenada);
+			//_amazonService.SalvarCopiaCsvComResultadoS3(listaTratadaEOrdenada);
 		}
 	}
 }

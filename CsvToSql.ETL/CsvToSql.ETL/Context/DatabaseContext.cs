@@ -6,7 +6,7 @@ namespace CsvToSql.ETL.Context
 {
 	public class DatabaseContext : DbContext
 	{
-		public DbSet<CampanhaModel> Campanhas { get; set; }
+		public DbSet<CampanhaModel> caiopires { get; set; }
 
 		public DatabaseContext()
 		{
