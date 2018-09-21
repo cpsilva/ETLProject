@@ -3,6 +3,7 @@ using CsvToSql.ETL.CsvService;
 using CsvToSql.ETL.EtlService;
 using CsvToSql.ETL.FtpService;
 using CsvToSql.ETL.SqlService;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -32,7 +33,6 @@ namespace CsvToSql.ETL
 		{
 			_services = services ?? new ServiceCollection();
 
-			//ETLProject Services
 			_services.AddScoped<IEtlService, EtlService.EtlService>();
 			_services.AddScoped<IAmazonService, AmazonService.AmazonService>();
 			_services.AddScoped<ICsvService, CsvService.CsvService>();
@@ -41,6 +41,19 @@ namespace CsvToSql.ETL
 			_services.BuildServiceProvider();
 
 			return services;
+		}
+
+		public static void AddDbContext<T>(string connectionString) where T : DbContext
+		{
+			_services.AddDbContext<T>(options => options.UseMySql(connectionString));
+			var context = GetService<T>();
+			context.Database.EnsureCreated();
+		}
+
+		public static void AddDbContextInMemoryDatabase<T>() where T : DbContext
+		{
+			_services.AddDbContext<T>(options => options.UseInMemoryDatabase(typeof(T).Name));
+			GetService<T>().Database.EnsureCreated();
 		}
 	}
 }

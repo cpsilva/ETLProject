@@ -3,7 +3,6 @@ using CsvToSql.ETL.CsvService;
 using CsvToSql.ETL.FtpService;
 using CsvToSql.ETL.SqlService;
 
-
 namespace CsvToSql.ETL.EtlService
 {
 	public class EtlService : IEtlService
@@ -24,8 +23,8 @@ namespace CsvToSql.ETL.EtlService
 		public void Executar()
 		{
 			var arquivo = _ftpService.BaixarCsvViaFTP();
-			_csvService.TratarInformacoesCsv(arquivo);
-			//_sqlService.GravarInformacaoBancoDados(arquivo);
+			var listaTratadaEOrdenada = _csvService.TratarInformacoesCsv(arquivo);
+			_sqlService.GravarInformacaoBancoDados(listaTratadaEOrdenada);
 			//_amazonService.SalvarCopiaCsvComResultadoS3(arquivo);
 		}
 	}

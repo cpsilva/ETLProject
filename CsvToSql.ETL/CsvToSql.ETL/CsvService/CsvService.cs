@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using CsvToSql.ETL.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,13 +8,13 @@ namespace CsvToSql.ETL.CsvService
 {
 	public class CsvService : ICsvService
 	{
-		public void TratarInformacoesCsv(TextReader csv)
+		public List<CampanhaModel> TratarInformacoesCsv(TextReader csv)
 		{
 			var listaCsvBruta = ConverteCsvParaListaDeCsvModel(csv);
 
 			var listaCsvNomeTratado = TratarNomeDaCampanha(listaCsvBruta);
 
-			var listaCampanhasAgrupadas = AgruparCampanhasEContarQuantidadeCliques(listaCsvNomeTratado);
+			return AgruparCampanhasEContarQuantidadeCliques(listaCsvNomeTratado);
 		}
 
 		private List<CampanhaModel> AgruparCampanhasEContarQuantidadeCliques(List<CsvModel> listaCsvNomeTratado)
@@ -23,10 +22,10 @@ namespace CsvToSql.ETL.CsvService
 			return listaCsvNomeTratado.GroupBy(g => g.NomeCampanha)
 				.Select(x => new CampanhaModel
 				{
-					NomeCampanha = x.Key,
-					TotalCliques = x.Select(y => y.NomeCampanha.Equals(x.Key)).Count()
+					nomeCampanha = x.Key,
+					totalCliques = x.Select(y => y.NomeCampanha.Equals(x.Key)).Count()
 				})
-				.OrderBy(y => y.NomeCampanha)
+				.OrderBy(y => y.nomeCampanha)
 				.ToList();
 		}
 
@@ -66,23 +65,23 @@ namespace CsvToSql.ETL.CsvService
 			{
 				var csv = new CsvModel();
 
-				if (!item.NomeCampanha.Contains("CAMPAIGN"))
+				if (item.NomeCampanha.Contains("CAMPAIGN"))
+					continue;
+
+				item.NomeCampanha = item.NomeCampanha.Split('_')[1];
+
+				if (item.NomeCampanha.Contains("Retry"))
 				{
-					item.NomeCampanha = item.NomeCampanha.Split('_')[1];
-
-					if (item.NomeCampanha.Contains("Retry"))
-					{
-						csv.NomeCampanha = item.NomeCampanha.Remove(item.NomeCampanha.Length - 6);
-					}
-					else
-					{
-						csv.NomeCampanha = item.NomeCampanha;
-					}
-
-					csv.Ping = item.Ping;
-
-					listaCsvNomeTratado.Add(csv);
+					csv.NomeCampanha = item.NomeCampanha.Remove(item.NomeCampanha.Length - 6);
 				}
+				else
+				{
+					csv.NomeCampanha = item.NomeCampanha;
+				}
+
+				csv.Ping = item.Ping;
+
+				listaCsvNomeTratado.Add(csv);
 			}
 
 			return listaCsvNomeTratado;
