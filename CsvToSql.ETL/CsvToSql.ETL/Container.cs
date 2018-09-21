@@ -12,8 +12,21 @@ namespace CsvToSql.ETL
 {
 	public class Container
 	{
-		private static IServiceCollection _services;
 		private static IServiceProvider _serviceProvider;
+		private static IServiceCollection _services;
+
+		public static void AddDbContext<T>(string connectionString) where T : DbContext
+		{
+			_services.AddDbContext<T>(options => options.UseMySql(connectionString));
+			var context = GetService<T>();
+			context.Database.EnsureCreated();
+		}
+
+		public static void AddDbContextInMemoryDatabase<T>() where T : DbContext
+		{
+			_services.AddDbContext<T>(options => options.UseInMemoryDatabase(typeof(T).Name));
+			GetService<T>().Database.EnsureCreated();
+		}
 
 		public static T GetService<T>()
 		{
@@ -46,19 +59,6 @@ namespace CsvToSql.ETL
 			_services.BuildServiceProvider();
 
 			return services;
-		}
-
-		public static void AddDbContext<T>(string connectionString) where T : DbContext
-		{
-			_services.AddDbContext<T>(options => options.UseMySql(connectionString));
-			var context = GetService<T>();
-			context.Database.EnsureCreated();
-		}
-
-		public static void AddDbContextInMemoryDatabase<T>() where T : DbContext
-		{
-			_services.AddDbContext<T>(options => options.UseInMemoryDatabase(typeof(T).Name));
-			GetService<T>().Database.EnsureCreated();
 		}
 	}
 }

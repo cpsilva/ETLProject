@@ -5,6 +5,6 @@ namespace CsvToSql.ETL.SqlService
 {
 	public interface ISqlService
 	{
-		void GravarInformacaoBancoDados(List<CampanhaModel> Arquivo);
+		void GravarListaDeCampanhasAgrupadasEOrdenadas(List<CampanhaModel> Arquivo);
 	}
 }

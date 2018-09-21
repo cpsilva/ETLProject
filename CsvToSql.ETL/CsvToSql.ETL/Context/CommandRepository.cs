@@ -22,18 +22,5 @@ namespace CsvToSql.ETL.Context
 		{
 			_databaseContext.Set<T>().AddRange(entity);
 		}
-
-		public void Atualizar(T entity)
-		{
-			var e = _databaseContext.Entry(entity);
-			_databaseContext.Entry(entity).State = EntityState.Modified;
-		}
-
-		public void Apagar(int id)
-		{
-			var entityTrackeable = _databaseContext.Set<T>().Find(id);
-			if (entityTrackeable == null) { return; }
-			_databaseContext.Set<T>().Remove(entityTrackeable);
-		}
 	}
 }

@@ -13,7 +13,7 @@ namespace CsvToSql.ETL.SqlService
 			_unit = unit;
 		}
 
-		public void GravarInformacaoBancoDados(List<CampanhaModel> listaCampanhaModel)
+		public void GravarListaDeCampanhasAgrupadasEOrdenadas(List<CampanhaModel> listaCampanhaModel)
 		{
 			_unit.CommandStack.Campanha.AdicionarRange(listaCampanhaModel);
 			_unit.CommandStack.SaveChanges();
