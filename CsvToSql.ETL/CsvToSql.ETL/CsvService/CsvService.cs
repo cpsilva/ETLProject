@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using CsvToSql.ETL.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +13,6 @@ namespace CsvToSql.ETL.CsvService
 			return listaCsvNomeTratado.GroupBy(g => g.NomeCampanha)
 				.Select(x => new CampanhaModel
 				{
-					id = Guid.NewGuid(),
 					nomeCampanha = x.Key,
 					totalCliques = x.Select(y => y.NomeCampanha.Equals(x.Key)).Count()
 				})

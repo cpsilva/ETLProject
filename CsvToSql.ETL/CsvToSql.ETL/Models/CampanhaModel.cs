@@ -1,11 +1,12 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CsvToSql.ETL.Models
 {
 	public class CampanhaModel : BaseModel
 	{
-		public Guid id { get; set; }
+		[Key]
 		public string nomeCampanha { get; set; }
+
 		public int totalCliques { get; set; }
 	}
 }
